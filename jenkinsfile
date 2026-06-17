@@ -49,6 +49,7 @@ pipeline {
             }
         }
     }
+    
     post {
         success {
             echo '✅ Application deployed successfully!'
@@ -56,4 +57,5 @@ pipeline {
         failure {
             echo '❌ Deployment failed.'
         }
+    }
 }
