@@ -20,19 +20,20 @@ pipeline {
             steps {
                 sshagent(credentials: ["${SSH_CRED}"]) {
                     sh '''
-                        echo "Installing Apache on server..."
+                        echo "Installing nginx on server..."
                         ssh -o StrictHostKeyChecking=no ${REMOTE_USER}@${SERVER_IP} '
                             sudo apt update &&
-                            sudo apt install apache2 -y &&
-                            sudo systemctl start apache2 &&
-                            sudo systemctl enable apache2
+                            sudo apt remove apache2 -y &&
+                            sudo apt install nginx -y &&
+                            sudo systemctl start nginx &&
+                            sudo systemctl enable nginx
                         '
                     '''
                 }
             }
         }
 
-        stage('Deploy to Apache Server') {
+        stage('Deploy to nginx Server') {
             steps {
                 sshagent(credentials: ["${SSH_CRED}"]) {
                     sh '''
